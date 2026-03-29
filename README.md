@@ -6,9 +6,18 @@
 
 </p>
 
-Patch and OTA-flash Generalplus GPCV1167B firmware.
+<div align="center">
 
-This work was done on 'smart glasses' from Aliexpress:
+**Patch and OTA-flash Generalplus GPCV1167B firmware.**
+
+</div>
+
+---
+
+- **Target Details:** Generalplus GPCV1167B · ARMv5TE · FreeRTOS + lwIP
+- **Protocol:** GPSOCKET over TCP port 8081
+
+- This work was done on 'smart glasses' from Aliexpress:
 
 <p align="center">
 
@@ -16,10 +25,9 @@ This work was done on 'smart glasses' from Aliexpress:
 
 </p>
 
-- **Target:** Generalplus GPCV1167B · ARMv5TE · FreeRTOS + lwIP
-- **Protocol:** GPSOCKET over TCP port 8081
+## Blog
 
----
+[Patching Firmware on the Worlds Worst Smart 'Glasses'](https://luke-m.xyz/other/camera-glasses-firmware-patching.md)
 
 ## What's here
 
@@ -31,8 +39,6 @@ This work was done on 'smart glasses' from Aliexpress:
 | `shellcode/cave.c` | ARM shellcode injected by the patcher (version overlay, key hook) |
 | `shellcode/Makefile` | Builds `cave.bin` with `arm-none-eabi-gcc` |
 | `golden_read.BIN` | Unmodified reference flash dump (input to patcher) |
-
----
 
 ## Quick start
 
@@ -71,8 +77,6 @@ python3 patcher.py --flash --dry-run
 python3 flash.py patched_flash.bin --host 192.168.25.1
 ```
 
----
-
 ## Building the shellcode
 
 Requires `arm-none-eabi-gcc`:
@@ -83,8 +87,6 @@ cd shellcode && make
 
 This produces `cave.bin`, which `patcher.py` appends to the decompressed firmware
 and installs a trampoline to at `0x2b7b4` (`print_version_on_screen`).
-
----
 
 ## Adding a patch
 
@@ -104,8 +106,6 @@ PATCHES = [
 ]
 ```
 
----
-
 ## Flash image format
 
 ```
@@ -118,8 +118,6 @@ PATCHES = [
 
 The patcher decompresses at `start_sector`, patches, recompresses with identical
 settings, and updates `end_sector` in the header.
-
----
 
 ## GPSOCKET protocol
 
@@ -139,8 +137,6 @@ Key commands used during OTA:
 | `CMD_FW_APPLY` | `0x0502` | Trigger checksum verify + flash write |
 
 Chunk size `0` in `CMD_FW_CHUNK` signals end-of-transfer and triggers the checksum check.
-
----
 
 ## Dependencies
 
